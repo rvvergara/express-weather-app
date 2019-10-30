@@ -3,14 +3,27 @@ const path = require('path');
 
 const publicDirPath = path.join(__dirname, '../public');
 const app = express();
+
+app.set('view engine', 'hbs');
 app.use(express.static(publicDirPath));
 
+app.get('/', (req, res) => {
+  res.render('index', {
+    title: 'Express Weather App',
+    name: 'Ryan V',
+  });
+});
+
 app.get('/about', (req, res) => {
-  res.sendFile(`${publicDirPath}/about.html`);
+  res.render('about', {
+    title: 'About',
+  });
 });
 
 app.get('/help', (req, res) => {
-  res.sendFile(`${publicDirPath}/help.html`);
+  res.render('help', {
+    title: 'Help Page',
+  });
 });
 
 app.get('/weather', (req, res) => {

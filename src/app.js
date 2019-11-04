@@ -38,9 +38,28 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
+  const { city } = req.query;
+
+  if (!city) {
+    return res.json({
+      error: 'City must be provided',
+    });
+  }
   res.send({
-    location: 'Bacoor, Cavite',
+    location: city,
     forecast: 'Sunny',
+  });
+});
+
+app.get('/products', (req, res) => {
+  if (!req.query.search) {
+    return res.send({
+      error: 'No search term provided',
+    });
+  }
+  console.log(req.query);
+  res.send({
+    products: [],
   });
 });
 

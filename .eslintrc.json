@@ -17,6 +17,7 @@
     "rules": {
         "no-console": 0,
         "import/no-unresolved": 0,
-        "camelcase": 0
+        "camelcase": 0,
+        "no-undef": 0
     }
 }

@@ -1,6 +1,22 @@
-fetch('/weather?city=manila')
-  .then((res) => res.json())
-  .then(({ error, summary, location }) => (
-    error ? console.log(error) : console.log({ summary, location })
-  ))
-  .catch((e) => console.log(e));
+const fetchWeather = async (city) => {
+  const res = await fetch(`/weather?city=${city}`);
+  const data = await res.json();
+  return data;
+};
+
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const city = e.target.elements[0].value;
+  const data = await fetchWeather(city);
+  const {
+    error, location, summary, precipProbability, temperature,
+  } = data;
+  if (error) {
+    console.log({ error: error.error });
+  } else {
+    console.log({
+      location, summary, temperature, precipProbability,
+    });
+  }
+  e.target.reset();
+});

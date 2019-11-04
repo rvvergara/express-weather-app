@@ -48,7 +48,7 @@ app.get('/weather', (req, res) => {
     });
   }
 
-  return geoCode(city, (err, { location, lat, long }) => {
+  return geoCode(city, (err, { location, lat, long } = {}) => {
     if (err) {
       return res.send({
         error: err,

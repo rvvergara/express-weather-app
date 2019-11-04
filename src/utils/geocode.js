@@ -5,6 +5,7 @@ const geoCode = (city, callback) => {
 
   request({ url, json: true }, (err, { body }) => {
     if (err) {
+      console.log('ERROR HERE ON GEOCODE');
       callback({ error: err }, null);
     } else if (body.features.length > 0) {
       const { features } = body;
@@ -13,7 +14,7 @@ const geoCode = (city, callback) => {
       const lat = center[1];
       callback(null, { long, lat, location: place_name });
     } else {
-      callback({ error: `${city} does not exist on earth` }, null);
+      callback({ error: `${city} does not exist on earth` });
     }
   });
 };

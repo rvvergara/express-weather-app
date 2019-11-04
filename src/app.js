@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('hbs');
+const geoCode = require('./utils/geocode');
+const foreCast = require('./utils/forecast');
 
 // Define paths for Express config
 const publicDirPath = path.join(__dirname, '../public');
@@ -45,9 +47,25 @@ app.get('/weather', (req, res) => {
       error: 'City must be provided',
     });
   }
-  res.send({
-    location: city,
-    forecast: 'Sunny',
+
+  return geoCode(city, (err, data) => {
+    if (err) {
+      return res.send({
+        error: err,
+      });
+    }
+    const { location, lat, long } = data;
+    return foreCast(lat, long, (error, forecast) => {
+      if (error) {
+        return res.send({
+          error,
+        });
+      }
+      return res.send({
+        location,
+        ...forecast,
+      });
+    });
   });
 });
 
@@ -58,7 +76,7 @@ app.get('/products', (req, res) => {
     });
   }
   console.log(req.query);
-  res.send({
+  return res.send({
     products: [],
   });
 });

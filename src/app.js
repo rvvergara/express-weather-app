@@ -48,13 +48,12 @@ app.get('/weather', (req, res) => {
     });
   }
 
-  return geoCode(city, (err, data) => {
+  return geoCode(city, (err, { location, lat, long }) => {
     if (err) {
       return res.send({
         error: err,
       });
     }
-    const { location, lat, long } = data;
     return foreCast(lat, long, (error, forecast) => {
       if (error) {
         return res.send({

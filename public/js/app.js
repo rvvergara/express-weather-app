@@ -7,16 +7,25 @@ const fetchWeather = async (city) => {
 document.querySelector('form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const city = e.target.elements[0].value;
+  const heading = document.querySelector('#heading');
+  const temp = document.querySelector('#temperature');
+  const precip = document.querySelector('#precipitation');
+  const sum = document.querySelector('#summary');
+  const loading = document.querySelector('#loading');
+  [...document.getElementsByTagName('p')].forEach((el) => el.innerHTML = '');
+  loading.innerText = 'Fetching weather...';
   const data = await fetchWeather(city);
   const {
     error, location, summary, precipProbability, temperature,
   } = data;
   if (error) {
-    console.log({ error: error.error });
+    heading.innerText = error.error || error;
   } else {
-    console.log({
-      location, summary, temperature, precipProbability,
-    });
+    heading.innerText = location;
+    temp.innerHTML = `<strong>Temperature: </strong>${temperature}&deg;C`;
+    sum.innerText = summary;
+    precip.innerHTML = `<strong>Precipitation: </strong> ${precipProbability}`;
   }
+  loading.innerText = '';
   e.target.reset();
 });

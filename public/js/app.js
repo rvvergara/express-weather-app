@@ -8,11 +8,9 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const city = e.target.elements[0].value;
   const heading = document.querySelector('#heading');
-  const temp = document.querySelector('#temperature');
-  const precip = document.querySelector('#precipitation');
-  const sum = document.querySelector('#summary');
+  const forecast = document.querySelector('#forecast');
   const loading = document.querySelector('#loading');
-  [...document.getElementsByTagName('p')].forEach((el) => { el.innerHTML = ''; });
+  forecast.innerHTML = '';
   loading.innerText = 'Fetching weather...';
   const data = await fetchWeather(city);
   const {
@@ -22,9 +20,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
     heading.innerText = error.error || error;
   } else {
     heading.innerText = location;
-    temp.innerHTML = `<strong>Temperature: </strong>${temperature}&deg;C`;
-    sum.innerText = summary;
-    precip.innerHTML = `<strong>Precipitation: </strong> ${precipProbability}`;
+    forecast.innerHTML = `${summary} It is ${temperature}&deg;C out. There is ${Math.round(precipProbability * 100)}% chance of rain.`;
   }
   loading.innerText = '';
   e.target.reset();

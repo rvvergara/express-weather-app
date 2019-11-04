@@ -12,7 +12,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   const precip = document.querySelector('#precipitation');
   const sum = document.querySelector('#summary');
   const loading = document.querySelector('#loading');
-  [...document.getElementsByTagName('p')].forEach((el) => el.innerHTML = '');
+  [...document.getElementsByTagName('p')].forEach((el) => { el.innerHTML = ''; });
   loading.innerText = 'Fetching weather...';
   const data = await fetchWeather(city);
   const {

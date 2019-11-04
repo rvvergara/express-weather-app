@@ -6,9 +6,17 @@
 <body>
   <div class="main-content">
     {{>header}}
-    <p>This is from handlebars</p>
+    <p>Use this site to get your weather!</p>
+    <form>
+      <input type="text" placeholder="Search Weather for City">
+      <button type='submit'>Fetch Weather</button>
+    </form>
+    <p id="loading"></p>
+    <p id="heading"></p>
+    <p id="forecast"></p>
   </div>
   {{>footer}}
+  <script src="/js/app.js"></script>
 </body>
 
 </html>

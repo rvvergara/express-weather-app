@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('hbs');
+const geoCode = require('./utils/geocode');
+const foreCast = require('./utils/forecast');
 
 // Define paths for Express config
 const publicDirPath = path.join(__dirname, '../public');
@@ -38,9 +40,43 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-  res.send({
-    location: 'Bacoor, Cavite',
-    forecast: 'Sunny',
+  const { city } = req.query;
+
+  if (!city) {
+    return res.json({
+      error: 'City must be provided',
+    });
+  }
+
+  return geoCode(city, (err, { location, lat, long } = {}) => {
+    if (err) {
+      return res.send({
+        error: err,
+      });
+    }
+    return foreCast(lat, long, (error, forecast) => {
+      if (error) {
+        return res.send({
+          error,
+        });
+      }
+      return res.send({
+        location,
+        ...forecast,
+      });
+    });
+  });
+});
+
+app.get('/products', (req, res) => {
+  if (!req.query.search) {
+    return res.send({
+      error: 'No search term provided',
+    });
+  }
+  console.log(req.query);
+  return res.send({
+    products: [],
   });
 });
 

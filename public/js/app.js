@@ -12,6 +12,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   const loading = document.querySelector('#loading');
   forecast.innerHTML = '';
   loading.innerText = 'Fetching weather...';
+  heading.innerHTML = '';
   const data = await fetchWeather(city);
   const {
     error, location, summary, precipProbability, temperature,

@@ -8,9 +8,11 @@ const foreCast = (lat, long, callback) => {
       callback(err);
     } else {
       const { currently, daily } = body;
-      const { summary } = daily;
+      const { summary, temperatureHigh, temperatureLow } = daily.data[0];
       const { temperature, precipProbability } = currently;
-      callback(err, { temperature, precipProbability, summary });
+      callback(err, {
+        temperature, precipProbability, summary, temperatureHigh, temperatureLow,
+      });
     }
   });
 };

@@ -15,13 +15,13 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   heading.innerHTML = '';
   const data = await fetchWeather(city);
   const {
-    error, location, summary, precipProbability, temperature,
+    error, location, summary, precipProbability, temperature, temperatureLow, temperatureHigh,
   } = data;
   if (error) {
     heading.innerText = error.error || error;
   } else {
     heading.innerText = location;
-    forecast.innerHTML = `${summary} It is ${temperature}&deg;C out. There is ${Math.round(precipProbability * 100)}% chance of rain.`;
+    forecast.innerHTML = `${summary} The average temperature is ${temperature}&deg;C with high of ${temperatureHigh}&deg;C and low of ${temperatureLow}&deg;C. There is ${Math.round(precipProbability * 100)}% chance of rain.`;
   }
   loading.innerText = '';
   e.target.reset();

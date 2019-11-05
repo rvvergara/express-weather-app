@@ -36,6 +36,12 @@ header a {
   text-decoration: none;
 }
 
+p a {
+  color: #888888;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .portrait {
   height: 250px;
 }
